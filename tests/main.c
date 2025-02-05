@@ -11,12 +11,13 @@ static void usage(char *name)
 	       "\t-d - Run the TZ diagnostics test that prints basic info on TZ heaps.\n"
 	       "\t-l - Load the test TA and send command.\n"
 	       "\t\t%s -l <path to TA binary> <command>\n"
+	       "\t-q - Run QCE tests\n"
 	       "\t-h - Print this help message and exit\n\n", name);
 }
 
 int main(int argc, char *argv[])
 {
-	switch (getopt(argc, argv, "dlh")) {
+	switch (getopt(argc, argv, "dlhq")) {
 	case 'd':
 		test_print_diagnostics_info();
 		break;
@@ -26,6 +27,8 @@ int main(int argc, char *argv[])
 
 		test_load_sample_ta(argv[2], atoi(argv[3]));
 		break;
+	case 'q':
+		return run_qce_test();
 help:
 	case 'h':
 	default:

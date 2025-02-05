@@ -4,7 +4,7 @@
 #include <time.h>
 #include "tests_private.h"
 
-static int test_ta_cmd_0(struct qcomtee_object *ta)
+int test_ta_cmd_0(struct qcomtee_object *ta)
 {
 	struct qcomtee_param params[2];
 	qcomtee_result_t result;
@@ -39,12 +39,7 @@ static int test_ta_cmd_0(struct qcomtee_object *ta)
 	return -1;
 }
 
-struct ta {
-	struct qcomtee_object *ta_controller;
-	struct qcomtee_object *ta;
-};
-
-static struct ta test_load_ta(struct qcomtee_object *service_object,
+struct ta test_load_ta(struct qcomtee_object *service_object,
 			      const char *pathname)
 {
 	struct ta ta = { QCOMTEE_OBJECT_NULL, QCOMTEE_OBJECT_NULL };
@@ -65,7 +60,7 @@ static struct ta test_load_ta(struct qcomtee_object *service_object,
 	/* 0 is IAppLoader_OP_loadFromBuffer. */
 	if (qcomtee_object_invoke(service_object, 0, params, 2, &result) ||
 	    (result != QCOMTEE_OK)) {
-		PRINT("qcomtee_object_invoke.\n");
+		PRINT("qcomtee_object_invoke failed %u.\n", result);
 		goto failed_out;
 	}
 
@@ -76,7 +71,7 @@ static struct ta test_load_ta(struct qcomtee_object *service_object,
 	/* 2 is IAppController_OP_getAppObject . */
 	if (qcomtee_object_invoke(ta.ta_controller, 2, params, 1, &result) ||
 	    (result != QCOMTEE_OK)) {
-		PRINT("qcomtee_object_invoke.\n");
+		PRINT("qcomtee_object_invoke failed . %u\n", result);
 		goto failed_out;
 	}
 

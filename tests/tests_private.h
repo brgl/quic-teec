@@ -54,8 +54,18 @@ int test_read_file2(const char *pathname, const char *name, char **buffer,
 void test_print_diagnostics_info(void);
 
 /* ta_load.c. */
-#define TEST_TA "smcinvoke_skeleton_ta64.mbn"
+#define TEST_TA "qcetestapp.mbn"
 
 void test_load_sample_ta(const char *pathname, int cmd);
+
+struct ta {
+	struct qcomtee_object *ta_controller;
+	struct qcomtee_object *ta;
+};
+
+int run_qce_test(void);
+int test_ta_cmd_0(struct qcomtee_object *ta);
+struct ta test_load_ta(struct qcomtee_object *service_object,
+		       const char *pathname);
 
 #endif // _TESTS_PRIVATE_H

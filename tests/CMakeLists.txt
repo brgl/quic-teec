@@ -14,6 +14,7 @@ set(SRC
 	diagnostics.c
 	ta_load.c
 	main.c
+	qce.c
 )
 
 # ''Built binary''.
